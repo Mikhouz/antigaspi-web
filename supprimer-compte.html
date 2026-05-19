@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suppression de compte – AntiGaspi'</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #4caf50;
+      --green-light: #e8f5e9;
+      --green-dark: #2e7d32;
+      --amber: #f59e0b;
+      --amber-light: #fffbeb;
+      --text: #1a1a1a;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --bg: #f9fafb;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 16px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--green);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--green-dark);
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .warning-box {
+      background: var(--amber-light);
+      border: 1px solid var(--amber);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .warning-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+    .warning-text {
+      font-size: 14px;
+      color: #92400e;
+      line-height: 1.5;
+    }
+
+    .data-list {
+      background: var(--green-light);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+    }
+
+    .data-list p {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green-dark);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .data-list ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .data-list li {
+      font-size: 14px;
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .data-list li::before {
+      content: "✓";
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.2s;
+      margin-bottom: 20px;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--green);
+    }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    .checkbox-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 2px 0 0;
+      flex-shrink: 0;
+      accent-color: var(--green);
+    }
+
+    .checkbox-row label {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .btn {
+      width: 100%;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn:hover { background: #b71c1c; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
+
+    .success {
+      display: none;
+      text-align: center;
+      padding: 24px 0 8px;
+    }
+
+    .success-icon { font-size: 48px; margin-bottom: 16px; }
+
+    .success h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .success p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer a { color: var(--green-dark); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">🌿</div>
+    <span class="logo-text">AntiGaspi'</span>
+  </div>
+
+  <h1>Supprimer mon compte</h1>
+  <p class="subtitle">Vous pouvez demander la suppression définitive de votre compte et de toutes vos données personnelles via ce formulaire. Votre demande sera traitée dans un délai de 30 jours.</p>
+
+  <div class="warning-box">
+    <span class="warning-icon">⚠️</span>
+    <p class="warning-text">Cette action est <strong>irréversible</strong>. Une fois votre compte supprimé, vos données ne pourront pas être récupérées.</p>
+  </div>
+
+  <div class="data-list">
+    <p>Données supprimées</p>
+    <ul>
+      <li>Votre compte et informations de profil</li>
+      <li>Votre inventaire alimentaire</li>
+      <li>Vos listes de courses</li>
+      <li>Vos statistiques et historique</li>
+      <li>Toutes vos données personnelles</li>
+    </ul>
+  </div>
+
+  <div id="form-section">
+    <label for="email">Adresse e-mail associée à votre compte *</label>
+    <input type="email" id="email" placeholder="votre@email.com" required />
+
+    <label for="reason">Motif de la suppression (facultatif)</label>
+    <textarea id="reason" placeholder="Dites-nous pourquoi vous souhaitez supprimer votre compte..."></textarea>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="confirm" onchange="toggleBtn()" />
+      <label for="confirm">Je comprends que cette action est définitive et que toutes mes données seront supprimées de manière permanente.</label>
+    </div>
+
+    <button class="btn" id="submit-btn" disabled onclick="handleSubmit()">
+      Supprimer définitivement mon compte
+    </button>
+  </div>
+
+  <div class="success" id="success-section">
+    <div class="success-icon">✅</div>
+    <h2>Demande enregistrée</h2>
+    <p>Votre demande de suppression a bien été envoyée à <strong>mjdahan@gmail.com</strong>.<br/>Elle sera traitée dans un délai de <strong>30 jours</strong>.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="mailto:mjdahan@gmail.com">mjdahan@gmail.com</a> · AntiGaspi' · Tous droits réservés
+</div>
+
+<script>
+  function toggleBtn() {
+    const cb = document.getElementById('confirm');
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = !cb.checked;
+  }
+
+  function handleSubmit() {
+    const email = document.getElementById('email').value.trim();
+    const reason = document.getElementById('reason').value.trim();
+    if (!email) { alert("Veuillez saisir votre adresse e-mail."); return; }
+
+    const subject = encodeURIComponent("Demande de suppression de compte AntiGaspi'");
+    const body = encodeURIComponent(
+      `Demande de suppression de compte\n\nE-mail : ${email}\nMotif : ${reason || 'Non renseigné'}`
+    );
+    window.location.href = `mailto:mjdahan@gmail.com?subject=${subject}&body=${body}`;
+
+    document.getElementById('form-section').style.display = 'none';
+    document.getElementById('success-section').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
