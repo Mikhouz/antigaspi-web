@@ -205,7 +205,9 @@
 
 <script>
 (function () {
-  const DEEP_LINK_BASE = 'com.app_antigaspi://login-callback';
+  const SCHEME       = 'com.app_antigaspi';
+  const HOST         = 'login-callback';
+  const PACKAGE      = 'com.app_antigaspi';
   const PLAY_STORE_URL = '#'; // TODO: remplacer par l'URL Google Play définitive
 
   const stateLoading  = document.getElementById('state-loading');
@@ -220,41 +222,53 @@
     el.classList.add('active');
   }
 
-  // Transmettre tous les paramètres d'URL au deep link (token, type, etc.)
-  const params = window.location.search || window.location.hash.replace('#', '?');
-  const deepLink = DEEP_LINK_BASE + params;
+  // Tokens Supabase : dans le hash (#access_token=...) ou les query params
+  const hashStr   = window.location.hash.replace(/^#/, '');
+  const searchStr = window.location.search.replace(/^\?/, '');
+  const tokenStr  = searchStr || hashStr;
+  const urlParams = new URLSearchParams(tokenStr);
 
-  btnReopen.href = deepLink;
   btnPlaystore.href = PLAY_STORE_URL;
 
-  // Vérifier s'il y a un paramètre error
-  const urlParams = new URLSearchParams(window.location.search || window.location.hash.replace(/^#/, ''));
+  // Erreur Supabase (token expiré, déjà utilisé...)
   const errorCode = urlParams.get('error') || urlParams.get('error_code');
-
   if (errorCode) {
     show(stateError);
     return;
   }
 
-  // Tenter l'ouverture du deep link
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  if (!isAndroid) {
+    // Desktop ou iOS : pas de deep link → fallback direct
+    show(stateFallback);
+    return;
+  }
+
+  // Android : intent:// — intercepté par l'OS, évite la navigation parasite dans les WebViews email
+  const queryStr   = tokenStr ? '?' + tokenStr : '';
+  const fallbackUrl = encodeURIComponent(PLAY_STORE_URL);
+  const intentUrl  = 'intent://' + HOST + queryStr + '#Intent;scheme=' + SCHEME + ';package=' + PACKAGE + ';S.browser_fallback_url=' + fallbackUrl + ';end';
+
+  btnReopen.href = intentUrl;
   show(stateLoading);
-  window.location.href = deepLink;
 
-  // Si l'app ne s'ouvre pas dans 2s → afficher le fallback ou succès
-  setTimeout(function () {
-    // Si la page est encore visible, l'app n'était pas installée
-    if (!document.hidden) {
-      // Sur Android, si l'app est installée, la page passe en arrière-plan (hidden)
-      // Sinon on reste ici → proposer Play Store
-      show(stateFallback);
-    } else {
-      show(stateSuccess);
-    }
-  }, 2000);
+  // Déclencher via un lien (plus fiable que window.location.href dans les WebViews)
+  const a = document.createElement('a');
+  a.href = intentUrl;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 
-  // Quand l'utilisateur revient sur la page après avoir ouvert l'app
+  // Après 3s sans que la page parte en arrière-plan → app non installée
+  const timer = setTimeout(function () {
+    if (!document.hidden) show(stateFallback);
+  }, 3000);
+
   document.addEventListener('visibilitychange', function () {
-    if (!document.hidden) {
+    if (document.hidden) {
+      clearTimeout(timer);
+    } else {
       show(stateSuccess);
     }
   });
