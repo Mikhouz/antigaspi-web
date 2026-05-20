@@ -17,8 +17,8 @@
   <link rel="icon" type="image/png" href="assets/icon_launcher.png" />
   <link rel="stylesheet" href="css/styles.css" />
 
-  <!-- Stripe Pricing Table (à activer après configuration du dashboard Stripe) -->
-  <!-- <script async src="https://js.stripe.com/v3/pricing-table.js"></script> -->
+  <!-- Stripe Pricing Table -->
+  <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
 
   <title>Sangachi — Sans gâchis, plus malin !</title>
 </head>
@@ -436,68 +436,12 @@
       </p>
     </div>
 
-    <!-- Zone Prêt à commencer : 2 options côte à côte -->
-    <div class="cta-section" id="pricing-table" data-animate style="margin-top: var(--space-20);">
-      <h3 style="text-align: center; margin-bottom: var(--space-12);">Prêt à commencer ?</h3>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); max-width: 800px; margin: 0 auto;">
-
-        <!-- Carré 1 : Via le web (Stripe) -->
-        <div style="
-          border: 2px solid var(--color-primary);
-          border-radius: 12px;
-          padding: var(--space-8);
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          min-height: 280px;
-        ">
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="40" height="40" style="margin: 0 auto var(--space-4);">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <h4 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-2);">Carte bleue</h4>
-            <p style="font-size: var(--text-sm); color: var(--color-neutral); line-height: 1.6;">
-              S'abonner en quelques clics directement sur notre site, paiement sécurisé par Stripe.
-            </p>
-          </div>
-          <a href="#" class="btn btn--primary btn--md" style="width: 100%; margin-top: var(--space-6);">
-            S'abonner maintenant
-          </a>
-        </div>
-
-        <!-- Carré 2 : Via l'app (Google Play) -->
-        <div style="
-          border: 2px solid var(--color-primary);
-          border-radius: 12px;
-          padding: var(--space-8);
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          min-height: 280px;
-        ">
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--color-primary)" width="40" height="40" style="margin: 0 auto var(--space-4);">
-              <path d="M3.18 23.88L14.8 12.26 3.18.16A2 2 0 002 2v19.88a2 2 0 001.18 2zM16.54 10.5l-2.9-2.9L5.39.78l9.15 9.72zM21.2 10.7l-2.88-1.66-3.2 3.2 3.2 3.2 2.9-1.67A2 2 0 0021.2 10.7zM5.39 23.22l8.25-8.22 2.9 2.9-9.15 4.65a2 2 0 01-2-.33z"/>
-            </svg>
-            <h4 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-2);">Via l'application</h4>
-            <p style="font-size: var(--text-sm); color: var(--color-neutral); line-height: 1.6;">
-              Télécharger l'app et commencer l'essai gratuit de 14 jours, sans engagement.
-            </p>
-          </div>
-          <a href="#" class="btn btn--primary btn--md" id="cta-playstore-stripe" style="width: 100%; margin-top: var(--space-6);">
-            Télécharger sur Google Play
-          </a>
-        </div>
-
-      </div>
-
-      <p style="font-size: var(--text-sm); color: var(--color-neutral); text-align: center; margin-top: var(--space-8);">
-        🔒 Paiement sécurisé · Sans engagement · Résiliez quand vous voulez
-      </p>
+    <!-- Stripe Pricing Table -->
+    <div id="pricing-table" data-animate style="margin-top: var(--space-20);">
+      <stripe-pricing-table
+        pricing-table-id="prctbl_1TZ9O0BOUHJOT3gZjOXPqvZ9"
+        publishable-key="pk_live_51JtW8RBOUHJOT3gZZcm2AXp3yzehg2aAg8ZvsiLyGUyhJVUT017vYRU6PsubgNkpawgQm700pERqzl4xZPJdzUPt006gR9A7Vm">
+      </stripe-pricing-table>
     </div>
 
   </div>
