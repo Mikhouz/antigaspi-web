@@ -2,7 +2,7 @@
   "buildCommand": "echo 'Static site - no build needed'",
   "outputDirectory": ".",
   "public": true,
-  "env": [],
+  "env": {},
   "headers": [
     {
       "source": "/(.*)",
