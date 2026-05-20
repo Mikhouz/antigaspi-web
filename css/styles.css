@@ -508,8 +508,6 @@ input, textarea, select { font-family: inherit; }
   box-shadow:
     0 0 0 1.5px #2a2a2a,
     0 0 0 2.5px #111,
-    0 40px 80px rgba(0,0,0,0.55),
-    0 20px 40px rgba(0,0,0,0.35),
     inset 0 0 0 1px rgba(255,255,255,0.04);
   flex-shrink: 0;
 }
@@ -820,6 +818,64 @@ input, textarea, select { font-family: inherit; }
 
 .screenshots__track .phone-mockup:nth-child(even) {
   transform: translateY(28px);
+}
+
+/* Galerie scrollable horizontal épurée avec bordure verte */
+.screenshots__gallery {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  padding-block: var(--space-8);
+  padding-bottom: var(--space-12);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.screenshots__gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.screenshot-card {
+  position: relative;
+  width: 180px;
+  border: 3px solid var(--color-primary);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(46, 184, 138, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 9 / 19.5;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+}
+
+.screenshot-card:nth-child(odd) {
+  transform: translateY(-16px);
+}
+
+.screenshot-card:nth-child(even) {
+  transform: translateY(16px);
+}
+
+.screenshot-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(46, 184, 138, 0.18);
+}
+
+.screenshot-card:nth-child(odd):hover {
+  transform: translateY(-20px);
+}
+
+.screenshot-card:nth-child(even):hover {
+  transform: translateY(12px);
+}
+
+.screenshot-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .screenshots__caption {
